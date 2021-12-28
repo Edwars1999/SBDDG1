@@ -1,0 +1,14 @@
+{
+  "name": "sbdd",
+  "version": "1.0.0",
+  "description": "backend of the project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Edwars Sabando",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}

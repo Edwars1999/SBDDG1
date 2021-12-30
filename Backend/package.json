@@ -9,6 +9,7 @@
   "author": "Edwars Sabando",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/spanner": "^5.16.0",
     "express": "^4.17.2"
   }
 }

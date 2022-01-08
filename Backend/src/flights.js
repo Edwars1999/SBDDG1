@@ -19,7 +19,8 @@ const database = instance.database(databaseId);
 
 var Flights = function () {}
 
-// Expose getter function to get all users
+//-----------------------------------------------FUNCIONES---------------------------------------
+// Get ALL
 Flights.prototype.getAllFlights = async function() {
 	
 	try {
@@ -41,5 +42,52 @@ Flights.prototype.getAllFlights = async function() {
 	}
 
 }
+
+// READ 
+Flights.prototype.getFlight = async function(idflight) {
+	
+	try {
+		const query = {
+			sql: 'SELECT * FROM flight WHERE flightid=${idflight}',
+		};
+		
+		let result = await database.run(query);
+		if (result[0]) {
+			var rows = result[0].map((row) => row.toJSON());
+			return rows;
+		
+		}else {
+			return null
+		}
+
+	}catch (err) {
+		throw("Error al obtener datos de la tabla Flight", err)
+	}
+
+}
+
+// CREATE
+Flights.prototype.createFlight = async function(flightSource, flightDest, flightDate, flightSeat, ticketCost) {
+	
+	try {
+		const query = {
+		sql: 'INSERT INTO flight (flightSource, flightDest, flightDate, flightSeat, ticketCost) VALUES (${flightSource}, ${flightDest}, ${flightDate}, ${flightSeat}, ${ticketCost})',
+		};
+		
+		let result = await database.run(query);
+		if (result[0]) {
+			var rows = result[0].map((row) => row.toJSON());
+			return rows;
+		
+		}else {
+			return null
+		}
+
+	}catch (err) {
+		throw("Error al obtener datos de la tabla Flight", err)
+	}
+
+}
+
 
 module.exports = Flights

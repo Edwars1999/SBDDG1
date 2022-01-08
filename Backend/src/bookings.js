@@ -1,16 +1,16 @@
 // Constantes
-const Spanner = require('@google-cloud/spanner');
+const {Spanner} = require('@google-cloud/spanner');
 
 // Cliente de Google Spanner
 
 const spanner = new Spanner({
 
-  projectId: process.env.projectId, // Environment variable assigned here
+  projectId: 'bamboo-case-331602', // ID del proyecto aqui
 
 });
 // Initialize Spanner instance
-const instance = spanner.instance(process.env.instanceId); // Environment variable assigned here
-const databaseId = process.env.databaseId; // Environment variable assigned here
+const instance = spanner.instance('sbddg1'); // ID de la instancia aqui
+const databaseId = 'aerolinea'; // ID de la base de datos aqui
 
 // Initialize database
 const database = instance.database(databaseId);

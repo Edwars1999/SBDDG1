@@ -1,8 +1,9 @@
 // Constantes
 const express = require('express');
-const flights = require("./routes/flights.js");
-const bookings = require("./routes/bookings.js");
-const passengers = require("./routes/passengers.js");
+const flights = require("./flights.js");
+const bookings = require("./bookings.js");
+const bookingdetails = require("./bookingdetails.js");
+const passengers = require("./passengers.js");
 
 const app = express();
 const port = 3000;
@@ -40,7 +41,7 @@ app.get('/', (req, res) => {
 app.get('/flights', (req, res) => {
 	try {
 		flight = new flights();
-		let data = await flight.getAllFlights()
+		let data = flight.getAllFlights()
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -56,7 +57,23 @@ app.get('/flights', (req, res) => {
 app.get('/bookings', (req, res) => {
 	try {
 		booking = new bookings();
-		let data = await booking.getAllBookings()
+		let data = booking.getAllBookings()
+		
+		if (data == null) {
+			res.status(404).send("No existe información")
+		}
+		res.send(data)
+		
+	}catch (err) {
+		res.status(500).send({err})
+	}
+});
+
+//------------------------ Rutas de la tabla BookingDetails ---------------------------
+app.get('/bookingdetails', (req, res) => {
+	try {
+		bookingdetails = new bookingdetails();
+		let data = bookingdetails.getAllBookingDetails()
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -72,7 +89,7 @@ app.get('/bookings', (req, res) => {
 app.get('/passengers', (req, res) => {
 	try {
 		passenger = new passengers();
-		let data = await passenger.getAllPassengers()
+		let data = passenger.getAllPassengers()
 		
 		if (data == null) {
 			res.status(404).send("No existe información")

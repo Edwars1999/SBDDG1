@@ -53,6 +53,72 @@ app.get('/flights', (req, res) => {
 	}
 });
 
+app.get('/flights/:id', (req, res) => {
+	const { id } = req.params;
+	try {
+		flight = new flights();
+		let data = flight.getFlight(id)
+		
+		if (data == null) {
+			res.status(404).send("No existe información")
+		}
+		res.send(data)
+		
+	}catch (err) {
+		res.status(500).send({err})
+	}
+});
+
+app.post('/flights/new', (req, res) => {
+	const { flightSource, flightDest, flightDate, flightSeat, ticketCost } = req.body;
+	try {
+		flight = new flights();
+		let data = flight.createFlight(flightSource, flightDest, flightDate, flightSeat, ticketCost)
+		
+		if (data == null) {
+			res.status(404).send("No se pudo enviar la información")
+		}
+		res.send(data)
+		
+	}catch (err) {
+		res.status(500).send({err})
+	}
+});
+
+app.put('/flights/:id', (req, res) => {
+	const { id } = req.params;
+	const { flightSource, flightDest, flightDate, flightSeat, ticketCost } = req.body;
+	try {
+		flight = new flights();
+		let data = flight.modifyFlight(id, flightSource, flightDest, flightDate, flightSeat, ticketCost)
+		
+		if (data == null) {
+			res.status(404).send("No existe información")
+		}
+		res.send(data)
+		
+	}catch (err) {
+		res.status(500).send({err})
+	}
+});
+
+app.delete('/flights/:id', (req, res) => {
+	const { id } = req.params;
+	try {
+		flight = new flights();
+		let data = flight.deleteFlight(id)
+		
+		if (data == null) {
+			res.status(404).send("No existe información")
+		}
+		res.send(data)
+		
+	}catch (err) {
+		res.status(500).send({err})
+	}
+});
+
+
 //--------------------------- Rutas de la tabla Booking ------------------------------
 app.get('/bookings', (req, res) => {
 	try {

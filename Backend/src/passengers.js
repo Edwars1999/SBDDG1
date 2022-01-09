@@ -5,11 +5,11 @@ const {Spanner} = require('@google-cloud/spanner');
 
 const spanner = new Spanner({
 
-  projectId: 'bamboo-case-331602', // ID del proyecto aqui
+  projectId: 'sbda-337622', // ID del proyecto aqui
 
 });
 // Initialize Spanner instance
-const instance = spanner.instance('sbddg1'); // ID de la instancia aqui
+const instance = spanner.instance('proyectodba2g1'); // ID de la instancia aqui
 const databaseId = 'aerolinea'; // ID de la base de datos aqui
 
 // Initialize database

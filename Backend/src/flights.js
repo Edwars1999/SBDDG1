@@ -5,11 +5,11 @@ const {Spanner} = require('@google-cloud/spanner');
 
 const spanner = new Spanner({
 
-  projectId: 'bamboo-case-331602', // ID del proyecto aqui
+  projectId: 'sbda-337622', // ID del proyecto aqui
 
 });
 // Initialize Spanner instance
-const instance = spanner.instance('sbddg1'); // ID de la instancia aqui
+const instance = spanner.instance('proyectodba2g1'); // ID de la instancia aqui
 const databaseId = 'aerolinea'; // ID de la base de datos aqui
 
 // Initialize database
@@ -61,7 +61,7 @@ Flights.prototype.getFlight = async function(idflight) {
 		}
 
 	}catch (err) {
-		throw("Error al obtener datos de la tabla Flight", err)
+		throw("Error al obtener el elemento Flight", err)
 	}
 
 }
@@ -84,7 +84,53 @@ Flights.prototype.createFlight = async function(flightSource, flightDest, flight
 		}
 
 	}catch (err) {
-		throw("Error al obtener datos de la tabla Flight", err)
+		throw("Error al crear un Flight", err)
+	}
+
+}
+
+// UPDATE
+Flights.prototype.modifyFlight = async function(idflight, flightSource, flightDest, flightDate, flightSeat, ticketCost) {
+	
+	try {
+		const query = {
+		sql: 'UPDATE flight SET flightSource=${flightSource}, flightDest=${flightDest}, flightDate=${flightDate}, flightSeat=${flightSeat}, ticketCost=${ticketCost} WHERE flightid=${idflight}',
+		};
+		
+		let result = await database.run(query);
+		if (result[0]) {
+			var rows = result[0].map((row) => row.toJSON());
+			return rows;
+		
+		}else {
+			return null
+		}
+
+	}catch (err) {
+		throw("Error al modificar un Flight", err)
+	}
+
+}
+
+// DELETE
+Flights.prototype.deleteFlight = async function(idflight) {
+	
+	try {
+		const query = {
+		sql: 'DELETE FROM flight WHERE flightid=${idflight}',
+		};
+		
+		let result = await database.run(query);
+		if (result[0]) {
+			var rows = result[0].map((row) => row.toJSON());
+			return rows;
+		
+		}else {
+			return null
+		}
+
+	}catch (err) {
+		throw("Error al modificar un Flight", err)
 	}
 
 }

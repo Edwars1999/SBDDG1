@@ -19,12 +19,12 @@ const database = instance.database(databaseId);
 
 var Bookings = function () {}
 
-// Expose getter function to get all bookings
+// Get All
 Bookings.prototype.getAllBookings = async function() {
 	
 	try {
 		const query = {
-			sql: 'SELECT * FROM booking',
+			sql: `SELECT * FROM booking`,
 		};
 		
 		let result = await database.run(query);
@@ -41,5 +41,98 @@ Bookings.prototype.getAllBookings = async function() {
 	}
 
 }
+
+// READ 
+Bookings.prototype.getBooking = async function(bookingId) {
+	
+	try {
+		const query = {
+			sql: `SELECT * FROM booking WHERE bookingId=${bookingId} AND passId=${passId}`,
+		};
+		
+		let result = await database.run(query);
+		if (result[0]) {
+			var rows = result[0].map((row) => row.toJSON());
+			return rows;
+		
+		}else {
+			return null
+		}
+
+	}catch (err) {
+		throw("Error al obtener el elemento Booking", err)
+	}
+
+}
+
+// CREATE
+Bookings.prototype.createBooking = async function(flightId, bookdate) {
+	
+	try {
+		const query = {
+			sql: `INSERT INTO booking (flightId, bookdate) VALUES (${flightId}, ${bookdate})`,
+		};
+		
+		let result = await database.run(query);
+		if (result[0]) {
+			var rows = result[0].map((row) => row.toJSON());
+			return rows;
+		
+		}else {
+			return null
+		}
+
+	}catch (err) {
+		throw("Error al crear el elemento Booking", err)
+	}
+
+}
+
+// UPDATE
+Bookings.prototype.modifyBooking = async function(bookingId, flightId, bookdate) {
+	
+	try {
+		const query = {
+			sql: `UPDATE booking SET flightId=${flightId}, bookdate=${bookdate} WHERE bookingId=${bookingId}`,
+		};
+		
+		let result = await database.run(query);
+		if (result[0]) {
+			var rows = result[0].map((row) => row.toJSON());
+			return rows;
+		
+		}else {
+			return null
+		}
+
+	}catch (err) {
+		throw("Error al modificar el elemento Booking", err)
+	}
+
+}
+
+// DELETE 
+Bookings.prototype.deleteBooking = async function(bookingId) {
+	
+	try {
+		const query = {
+			sql: `DELETE FROM booking WHERE bookingId=${bookingId}`,
+		};
+		
+		let result = await database.run(query);
+		if (result[0]) {
+			var rows = result[0].map((row) => row.toJSON());
+			return rows;
+		
+		}else {
+			return null
+		}
+
+	}catch (err) {
+		throw("Error al eliminar el elemento Booking", err)
+	}
+
+}
+
 
 module.exports = Bookings

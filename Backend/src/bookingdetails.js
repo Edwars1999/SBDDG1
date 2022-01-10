@@ -19,12 +19,12 @@ const database = instance.database(databaseId);
 
 var BookingDetails = function () {}
 
-// Expose getter function to get all bookings
+// Get All
 BookingDetails.prototype.getAllBookingDetails = async function() {
 	
 	try {
 		const query = {
-			sql: 'SELECT * FROM bookingdetails',
+			sql: `SELECT * FROM bookingdetails`,
 		};
 		
 		let result = await database.run(query);
@@ -41,5 +41,29 @@ BookingDetails.prototype.getAllBookingDetails = async function() {
 	}
 
 }
+
+// READ 
+BookingDetails.prototype.getBookingDetails = async function(bookingId, passId) {
+	
+	try {
+		const query = {
+			sql: `SELECT * FROM bookingdetails WHERE bookingId=${bookingId} AND passId=${passId}`,
+		};
+		
+		let result = await database.run(query);
+		if (result[0]) {
+			var rows = result[0].map((row) => row.toJSON());
+			return rows;
+		
+		}else {
+			return null
+		}
+
+	}catch (err) {
+		throw("Error al obtener el elemento BookingDetails", err)
+	}
+
+}
+
 
 module.exports = BookingDetails

@@ -25,7 +25,7 @@ Flights.prototype.getAllFlights = async function() {
 	
 	try {
 		const query = {
-			sql: 'SELECT * FROM flight',
+			sql: `SELECT * FROM flight`,
 		};
 		
 		let result = await database.run(query);
@@ -48,7 +48,7 @@ Flights.prototype.getFlight = async function(idflight) {
 	
 	try {
 		const query = {
-			sql: 'SELECT * FROM flight WHERE flightid=${idflight}',
+			sql: `SELECT * FROM flight WHERE flightId=${idflight}`,
 		};
 		
 		let result = await database.run(query);
@@ -71,7 +71,7 @@ Flights.prototype.createFlight = async function(flightSource, flightDest, flight
 	
 	try {
 		const query = {
-		sql: 'INSERT INTO flight (flightSource, flightDest, flightDate, flightSeat, ticketCost) VALUES (${flightSource}, ${flightDest}, ${flightDate}, ${flightSeat}, ${ticketCost})',
+		sql: `INSERT INTO flight (flightSource, flightDest, flightDate, flightSeat, ticketCost) VALUES (${flightSource}, ${flightDest}, ${flightDate}, ${flightSeat}, ${ticketCost})`,
 		};
 		
 		let result = await database.run(query);
@@ -94,7 +94,7 @@ Flights.prototype.modifyFlight = async function(idflight, flightSource, flightDe
 	
 	try {
 		const query = {
-		sql: 'UPDATE flight SET flightSource=${flightSource}, flightDest=${flightDest}, flightDate=${flightDate}, flightSeat=${flightSeat}, ticketCost=${ticketCost} WHERE flightid=${idflight}',
+		sql: `UPDATE flight SET flightSource=${flightSource}, flightDest=${flightDest}, flightDate=${flightDate}, flightSeat=${flightSeat}, ticketCost=${ticketCost} WHERE flightId=${idflight}`,
 		};
 		
 		let result = await database.run(query);
@@ -117,7 +117,7 @@ Flights.prototype.deleteFlight = async function(idflight) {
 	
 	try {
 		const query = {
-		sql: 'DELETE FROM flight WHERE flightid=${idflight}',
+		sql: `DELETE FROM flight WHERE flightId=${idflight}`,
 		};
 		
 		let result = await database.run(query);
@@ -130,7 +130,7 @@ Flights.prototype.deleteFlight = async function(idflight) {
 		}
 
 	}catch (err) {
-		throw("Error al modificar un Flight", err)
+		throw("Error al eliminar un Flight", err)
 	}
 
 }

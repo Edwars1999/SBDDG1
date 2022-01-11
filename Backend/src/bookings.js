@@ -89,11 +89,11 @@ Bookings.prototype.createBooking = async function(flightId, bookdate) {
 }
 
 // UPDATE
-Bookings.prototype.modifyBooking = async function(bookingId, flightId, bookdate) {
+Bookings.prototype.modifyBooking = async function(bookingId, bookdate) {
 	
 	try {
 		const query = {
-			sql: `UPDATE booking SET flightId=${flightId}, bookdate=${bookdate} WHERE bookingId=${bookingId}`,
+			sql: `UPDATE booking SET bookdate=${bookdate} WHERE bookingId=${bookingId}`,
 		};
 		
 		let result = await database.run(query);

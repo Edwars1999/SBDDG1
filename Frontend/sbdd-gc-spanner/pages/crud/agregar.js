@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import Appbar from "../../src/components/Appbar";
-import SelectComponent from "../../src/components/SelectComponent";
+import SelectComponentAdd from "../../src/components/SelectComponentAdd";
 
 const agregar = () => {
   return (
@@ -11,7 +11,7 @@ const agregar = () => {
           Agregar
         </Typography>
       </div>
-      <SelectComponent />
+      <SelectComponentAdd />
     </div>
   );
 };

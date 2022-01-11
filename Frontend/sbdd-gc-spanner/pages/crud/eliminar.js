@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import Appbar from "../../src/components/Appbar";
-import SelectComponent from "../../src/components/SelectComponent";
+import SelectComponentDelete from "../../src/components/SelectComponentDelete";
 
 const eliminar = () => {
   return (
@@ -11,7 +11,7 @@ const eliminar = () => {
           Eliminar
         </Typography>
       </div>
-      <SelectComponent />
+      <SelectComponentDelete />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 // Constantes
 const express = require('express');
+var cors = require('cors')
 const flights = require("./flights.js");
 const bookings = require("./bookings.js");
 const bookingdetailss = require("./bookingdetails.js");
@@ -9,11 +10,12 @@ const app = express();
 const port = 3000;
 
 // Middlewares
+app.use(cors())
 // Add headers before the routes are defined
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -42,10 +44,11 @@ app.get('/', (req, res) => {
 
 
 //--------------------------- Rutas de la tabla Flight ------------------------------
-app.get('/flights', (req, res) => {
+app.get('/flights', async (req, res) => {
 	try {
 		flight = new flights();
-		let data = flight.getAllFlights()
+		let data = await flight.getAllFlights()
+		console.log(data)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -57,11 +60,11 @@ app.get('/flights', (req, res) => {
 	}
 });
 
-app.get('/flights/:id', (req, res) => {
+app.get('/flights/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
 		flight = new flights();
-		let data = flight.getFlight(id)
+		let data = await flight.getFlight(id)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -73,11 +76,11 @@ app.get('/flights/:id', (req, res) => {
 	}
 });
 
-app.post('/flights/new', (req, res) => {
+app.post('/flights/new', async (req, res) => {
 	const { flightSource, flightDest, flightDate, flightSeat, ticketCost } = req.body;
 	try {
 		flight = new flights();
-		let data = flight.createFlight(flightSource, flightDest, flightDate, flightSeat, ticketCost)
+		let data = await flight.createFlight(flightSource, flightDest, flightDate, flightSeat, ticketCost)
 		
 		if (data == null) {
 			res.status(404).send("No se pudo enviar la información")
@@ -89,12 +92,12 @@ app.post('/flights/new', (req, res) => {
 	}
 });
 
-app.put('/flights/:id', (req, res) => {
+app.put('/flights/:id', async (req, res) => {
 	const { id } = req.params;
 	const { flightSource, flightDest, flightDate, flightSeat, ticketCost } = req.body;
 	try {
 		flight = new flights();
-		let data = flight.modifyFlight(id, flightSource, flightDest, flightDate, flightSeat, ticketCost)
+		let data = await flight.modifyFlight(id, flightSource, flightDest, flightDate, flightSeat, ticketCost)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -106,11 +109,11 @@ app.put('/flights/:id', (req, res) => {
 	}
 });
 
-app.delete('/flights/:id', (req, res) => {
+app.delete('/flights/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
 		flight = new flights();
-		let data = flight.deleteFlight(id)
+		let data = await flight.deleteFlight(id)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -130,10 +133,10 @@ app.delete('/flights/:id', (req, res) => {
 
 
 //--------------------------- Rutas de la tabla Booking ------------------------------
-app.get('/bookings', (req, res) => {
+app.get('/bookings', async (req, res) => {
 	try {
 		booking = new bookings();
-		let data = booking.getAllBookings()
+		let data = await booking.getAllBookings()
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -145,11 +148,11 @@ app.get('/bookings', (req, res) => {
 	}
 });
 
-app.get('/bookings/:id', (req, res) => {
+app.get('/bookings/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
 		booking = new bookings();
-		let data = booking.getBooking(id)
+		let data = await booking.getBooking(id)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -161,11 +164,11 @@ app.get('/bookings/:id', (req, res) => {
 	}
 });
 
-app.post('/bookings/new', (req, res) => {
+app.post('/bookings/new', async (req, res) => {
 	const { flightId, bookdate } = req.body;
 	try {
 		booking = new bookings();
-		let data = booking.createBooking(flightId, bookdate)
+		let data = await booking.createBooking(flightId, bookdate)
 		
 		if (data == null) {
 			res.status(404).send("No se pudo enviar la información")
@@ -177,12 +180,12 @@ app.post('/bookings/new', (req, res) => {
 	}
 });
 
-app.put('/bookings/:id', (req, res) => {
+app.put('/bookings/:id', async (req, res) => {
 	const { id } = req.params;
 	const { flightId, bookdate } = req.body;
 	try {
 		booking = new bookings();
-		let data = booking.modifyBooking(id, flightId, bookdate)
+		let data = await booking.modifyBooking(id, flightId, bookdate)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -194,11 +197,11 @@ app.put('/bookings/:id', (req, res) => {
 	}
 });
 
-app.delete('/bookings/:id', (req, res) => {
+app.delete('/bookings/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
 		booking = new bookings();
-		let data = booking.deleteBooking(id)
+		let data = await booking.deleteBooking(id)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -215,10 +218,10 @@ app.delete('/bookings/:id', (req, res) => {
 
 
 //--------------------------- Rutas de la tabla Passenger ------------------------------
-app.get('/passengers', (req, res) => {
+app.get('/passengers', async (req, res) => {
 	try {
 		passenger = new passengers();
-		let data = passenger.getAllPassengers()
+		let data = await passenger.getAllPassengers()
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -230,11 +233,11 @@ app.get('/passengers', (req, res) => {
 	}
 });
 
-app.get('/passengers/:id', (req, res) => {
+app.get('/passengers/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
 		passenger = new passengers();
-		let data = passenger.getPassenger(id)
+		let data = await passenger.getPassenger(id)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -246,11 +249,11 @@ app.get('/passengers/:id', (req, res) => {
 	}
 });
 
-app.post('/passengers/new', (req, res) => {
+app.post('/passengers/new', async (req, res) => {
 	const { passName, passEmail, passDob } = req.body;
 	try {
 		passenger = new passengers();
-		let data = passenger.createPassenger(passName, passEmail, passDob)
+		let data = await passenger.createPassenger(passName, passEmail, passDob)
 		
 		if (data == null) {
 			res.status(404).send("No se pudo enviar la información")
@@ -262,12 +265,12 @@ app.post('/passengers/new', (req, res) => {
 	}
 });
 
-app.put('/passengers/:id', (req, res) => {
+app.put('/passengers/:id', async (req, res) => {
 	const { id } = req.params;
 	const { passName, passEmail, passDob } = req.body;
 	try {
 		passenger = new passengers();
-		let data = passenger.modifyPassenger(id, passName, passEmail, passDob)
+		let data = await passenger.modifyPassenger(id, passName, passEmail, passDob)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -279,11 +282,11 @@ app.put('/passengers/:id', (req, res) => {
 	}
 });
 
-app.delete('/passengers/:id', (req, res) => {
+app.delete('/passengers/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
 		passenger = new passengers();
-		let data = passenger.deletePassenger(id)
+		let data = await passenger.deletePassenger(id)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -300,10 +303,10 @@ app.delete('/passengers/:id', (req, res) => {
 
 
 //------------------------ Rutas de la tabla BookingDetails ---------------------------
-app.get('/bookingdetailss', (req, res) => {
+app.get('/bookingdetailss', async (req, res) => {
 	try {
 		bookingdetails = new bookingdetailss();
-		let data = bookingdetails.getAllBookingDetails()
+		let data = await bookingdetails.getAllBookingDetails()
 		
 		if (data == null) {
 			res.status(404).send("No existe información")
@@ -315,11 +318,11 @@ app.get('/bookingdetailss', (req, res) => {
 	}
 });
 
-app.get('/bookingsdetailss/:id1/:id2', (req, res) => {
+app.get('/bookingsdetailss/:id1/:id2', async (req, res) => {
 	const { id1, id2 } = req.params;
 	try {
 		bookingdetails = new bookingdetailss();
-		let data = bookingdetails.getBookingDetails(id1, id2)
+		let data = await bookingdetails.getBookingDetails(id1, id2)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")

@@ -1,11 +1,15 @@
+require('dotenv').config()
 // Constantes
 const {Spanner} = require('@google-cloud/spanner');
+
+
 
 // Cliente de Google Spanner
 
 const spanner = new Spanner({
 
   projectId: 'sbda-337622', // ID del proyecto aqui
+  keyFilename: process.env.keyFilename
 
 });
 // Initialize Spanner instance

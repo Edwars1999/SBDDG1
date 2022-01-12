@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import axios from 'axios';
 
 function createData(flightid, source, destination, date, seat, cost) {
   return {
@@ -64,6 +65,14 @@ const headCells = [
 ];
 
 export default function FlightTable() {
+
+  useEffect(async ()=>{
+    await axios.get('http://localhost:3000/flights')
+    .then((response)=>{
+      console.log(response.data)
+    })
+  },[])
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 

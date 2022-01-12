@@ -5,10 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Container, Button, Input, InputAdornment } from "@mui/material";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
-import DateAdapter from "@mui/lab/AdapterMoment";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { Container, Button } from "@mui/material";
 import moment from "moment";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
@@ -19,49 +16,11 @@ const SelectComponentDelete = () => {
   const [tblName, setTblName] = React.useState("");
   const [open, setOpen] = React.useState(false);
   // booking
-  const [date, setDate] = React.useState(new moment());
   const [id, setId] = React.useState(0);
-
-  // passenger
-  const [passName, setpassName] = React.useState("");
-  const [passEmail, setpassEmail] = React.useState("");
-  //flights
-  {
-    /* flightSource, flightDest, flightDate, flightSeat, ticketCost */
-  }
-  const [flightSource, setflightSource] = React.useState("");
-  const [flightDest, setflightDest] = React.useState("");
-  const [flightSeat, setflightSeat] = React.useState(0);
-  const [ticketCost, setticketCost] = React.useState(0.0);
 
   const handleId = (event) => {
     setId(event.target.value);
-  };
-
-  const handleChangeName = (event) => {
-    setpassName(event.target.value);
-  };
-
-  const handleChangeEmail = (event) => {
-    setpassEmail(event.target.value);
-  };
-
-  const handleflightSource = (event) => {
-    setflightSource(event.target.value);
-  };
-  const handleflightDest = (event) => {
-    setflightDest(event.target.value);
-  };
-  const handleflightSeat = (event) => {
-    setflightSeat(event.target.value);
-  };
-  const handleticketCost = (event) => {
-    setticketCost(event.target.value);
-  };
-
-  const handleChangeDate = (newValue) => {
-    setDate(newValue.format("L"));
-  };
+  }
 
   const handleChange = (event) => {
     setTblName(event.target.value);

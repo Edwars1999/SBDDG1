@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,30 +9,6 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
-function createData(bookingid, flightid, bookdate) {
-  return {
-    bookingid,
-    flightid,
-    bookdate,
-  };
-}
-
-const rows = [
-  createData(305, 3.7, new Date().toDateString()),
-  createData(452, 25.0, new Date().toDateString()),
-  createData(262, 16.0, new Date().toDateString()),
-  createData(159, 6.0, new Date().toDateString()),
-  createData(356, 16.0, new Date().toDateString()),
-  createData(408, 3.2, new Date().toDateString()),
-  createData(237, 9.0, new Date().toDateString()),
-  createData(375, 0.0, new Date().toDateString()),
-  createData(518, 26.0, new Date().toDateString()),
-  createData(392, 0.2, new Date().toDateString()),
-  createData(318, 0, new Date().toDateString()),
-  createData(360, 19.0, new Date().toDateString()),
-  createData(437, 18.0, new Date().toDateString()),
-];
 
 const headCells = [
   {
@@ -49,6 +26,14 @@ const headCells = [
 ];
 
 export default function BookingTable() {
+  const [bookings, setBookings] = React.useState([]);
+
+  useEffect(async () => {
+    await axios.get("http://localhost:3000/bookings").then((response) => {
+      setBookings(response.data);
+    });
+  }, []);
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -84,7 +69,7 @@ export default function BookingTable() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
+                {bookings
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const labelId = `enhanced-table-body-${index}`;
@@ -96,7 +81,12 @@ export default function BookingTable() {
                         tabIndex={-1}
                         key={row.bookingid}
                       >
-                        <TableCell component="th" id={labelId} scope="row" align="center">
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          align="center"
+                        >
                           {row.bookingid}
                         </TableCell>
                         <TableCell align="center">{row.flightid}</TableCell>
@@ -110,7 +100,7 @@ export default function BookingTable() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={rows.length}
+            count={bookings.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

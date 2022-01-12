@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,96 +9,6 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
-function createData(passid, passname, passemail, passdob) {
-  return {
-    passid,
-    passname,
-    passemail,
-    passdob,
-  };
-}
-
-const rows = [
-  createData(
-    305,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    452,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    262,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    159,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    356,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    408,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    237,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    375,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    518,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    392,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    318,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    360,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-  createData(
-    437,
-    "Juan Perez",
-    "juanperez@gmail.com",
-    new Date().toDateString()
-  ),
-];
 
 const headCells = [
   {
@@ -119,6 +30,16 @@ const headCells = [
 ];
 
 export default function PassengerTable() {
+
+  const [passenger, setPassenger] = React.useState([]);
+
+  useEffect(async () => {
+    await axios.get("http://localhost:3000/passengers").then((response) => {
+      setPassenger(response.data);
+    });
+  }, []);
+
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -154,7 +75,7 @@ export default function PassengerTable() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
+                {passenger
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const labelId = `enhanced-table-body-${index}`;
@@ -186,7 +107,7 @@ export default function PassengerTable() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={rows.length}
+            count={passenger.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

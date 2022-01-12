@@ -48,7 +48,6 @@ app.get('/flights', async (req, res) => {
 	try {
 		flight = new flights();
 		let data = await flight.getAllFlights()
-		console.log(data)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")

@@ -99,10 +99,10 @@ Bookings.prototype.modifyBooking = async function(bookingId, bookdate) {
 		const query = {
 			sql: `UPDATE booking SET bookdate=${bookdate} WHERE bookingId=${bookingId}`,
 		};
-		
 		let result = await database.run(query);
 		if (result[0]) {
 			var rows = result[0].map((row) => row.toJSON());
+			console.log(rows)
 			return rows;
 		
 		}else {

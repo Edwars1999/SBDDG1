@@ -12,6 +12,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import moment from "moment";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
+import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 
 const SelectComponentEdit = () => {
@@ -66,7 +67,21 @@ const SelectComponentEdit = () => {
   const handleChange = (event) => {
     setTblName(event.target.value);
   };
-
+  const updateSubmit = async () =>{
+    let params = {
+       id,
+       bookdate: date
+    }
+    try{
+      let response = await axios.put(`http://localhost:3000/update/bookings/${id}`,params)
+      .then(res => {
+        console.log(res)
+      })
+      return response;
+    }catch(e){
+      console.log('Error al actualizar el registro',e)
+    }
+  }
   return (
     <Container>
       <Box sx={{ minWidth: 120 }} mt={4}>
@@ -114,6 +129,7 @@ const SelectComponentEdit = () => {
             <Button
               variant="contained"
               onClick={() => {
+                updateSubmit();
                 setOpen(true);
               }}
             >

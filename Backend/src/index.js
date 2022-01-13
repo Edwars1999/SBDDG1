@@ -179,12 +179,12 @@ app.post('/bookings/new', async (req, res) => {
 	}
 });
 
-app.put('/bookings/:id', async (req, res) => {
-	const { id } = req.params;
-	const { flightId, bookdate } = req.body;
+app.put('/update/bookings/:id', async (req, res) => {
+	const { id, bookdate } = req.body;
+	console.log(req.body)
 	try {
 		booking = new bookings();
-		let data = await booking.modifyBooking(id, flightId, bookdate)
+		let data = await booking.modifyBooking(id, bookdate)
 		
 		if (data == null) {
 			res.status(404).send("No existe información")

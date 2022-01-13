@@ -85,7 +85,7 @@ export default function PassengerTable() {
                         hover
                         onClick={(event) => handleClick(event, row)}
                         tabIndex={-1}
-                        key={row.passid}
+                        key={row.passId}
                       >
                         <TableCell
                           component="th"
@@ -93,11 +93,11 @@ export default function PassengerTable() {
                           scope="row"
                           align="center"
                         >
-                          {row.passid}
+                          {row.passId}
                         </TableCell>
-                        <TableCell align="center">{row.passname}</TableCell>
-                        <TableCell align="center">{row.passemail}</TableCell>
-                        <TableCell align="center">{row.passdob}</TableCell>
+                        <TableCell align="center">{row.passName}</TableCell>
+                        <TableCell align="center">{row.passEmail}</TableCell>
+                        <TableCell align="center">{row.passDob}</TableCell>
                       </TableRow>
                     );
                   })}

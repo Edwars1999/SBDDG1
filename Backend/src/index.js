@@ -75,7 +75,7 @@ app.get('/flights/:id', async (req, res) => {
 	}
 });
 
-app.post('/flights/new', async (req, res) => {
+app.post('post/flights/new', async (req, res) => {
 	const { flightSource, flightDest, flightDate, flightSeat, ticketCost } = req.body;
 	try {
 		flight = new flights();
@@ -91,7 +91,7 @@ app.post('/flights/new', async (req, res) => {
 	}
 });
 
-app.put('/flights/:id', async (req, res) => {
+app.put('update/flights/:id', async (req, res) => {
 	const { id } = req.params;
 	const { flightSource, flightDest, flightDate, flightSeat, ticketCost } = req.body;
 	try {
@@ -108,7 +108,7 @@ app.put('/flights/:id', async (req, res) => {
 	}
 });
 
-app.delete('/flights/:id', async (req, res) => {
+app.delete('/delete/flights/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
 		flight = new flights();

@@ -10,6 +10,7 @@ import moment from "moment";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
 
 const SelectComponentDelete = () => {
   const tblNames = ["flight", "booking", "passenger"];
@@ -25,6 +26,21 @@ const SelectComponentDelete = () => {
   const handleChange = (event) => {
     setTblName(event.target.value);
   };
+
+  const deleteSubmit = async () =>{
+    let params = {
+       id
+    }
+    try{
+      let response = await axios.delete(`http://localhost:3000/delete/flights/${id}`)
+      .then(res => {
+        console.log(res)
+      })
+      return response;
+    }catch(e){
+      console.log('Error al borrar el registro',e)
+    }
+  }
 
   return (
     <Container>
@@ -154,6 +170,7 @@ const SelectComponentDelete = () => {
             <Button
               variant="contained"
               onClick={() => {
+                deleteSubmit()
                 setOpen(true);
               }}
             >

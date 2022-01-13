@@ -30,6 +30,7 @@ export default function BookingTable() {
 
   useEffect(async () => {
     await axios.get("http://localhost:3000/bookings").then((response) => {
+      console.log(response.data)
       setBookings(response.data);
     });
   }, []);
@@ -79,7 +80,7 @@ export default function BookingTable() {
                         hover
                         onClick={(event) => handleClick(event, row)}
                         tabIndex={-1}
-                        key={row.bookingid}
+                        key={row.bookingId}
                       >
                         <TableCell
                           component="th"
@@ -87,10 +88,10 @@ export default function BookingTable() {
                           scope="row"
                           align="center"
                         >
-                          {row.bookingid}
+                          {row.bookingId}
                         </TableCell>
-                        <TableCell align="center">{row.flightid}</TableCell>
-                        <TableCell align="center">{row.bookdate}</TableCell>
+                        <TableCell align="center">{row.flightId}</TableCell>
+                        <TableCell align="center">{row.bookDate}</TableCell>
                       </TableRow>
                     );
                   })}

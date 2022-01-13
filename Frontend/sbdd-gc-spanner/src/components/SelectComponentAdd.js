@@ -13,6 +13,7 @@ import moment from "moment";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
 
 const SelectComponentAdd = () => {
   const tblNames = ["flight", "booking", "passenger"];
@@ -20,6 +21,7 @@ const SelectComponentAdd = () => {
   const [open, setOpen] = React.useState(false);
   // booking
   const [date, setDate] = React.useState(new moment());
+  const [id, setID] = React.useState(0);
   // passenger
   const [passName, setpassName] = React.useState("");
   const [passEmail, setpassEmail] = React.useState("");
@@ -31,6 +33,10 @@ const SelectComponentAdd = () => {
   const [flightDest, setflightDest] = React.useState("");
   const [flightSeat, setflightSeat] = React.useState(0);
   const [ticketCost, setticketCost] = React.useState(0.0);
+
+  const handleChangeId =(event)=>{
+    setID(event.target.value)
+  }
 
   const handleChangeName = (event) => {
     setpassName(event.target.value);
@@ -61,6 +67,66 @@ const SelectComponentAdd = () => {
     setTblName(event.target.value);
   };
 
+  const handleSubmmit = () => {
+    createEntity();
+  };
+
+  const createEntity = async () => {
+    const body;
+    switch (tblName) {
+      case "flight":
+        body = {
+          flightSource,
+          flightDest,
+          flightDate: date,
+          flightSeat,
+          ticketCost,
+        };
+        try{
+          let response = await axios.post(`http://localhost:3000/post/flights/new`, body)
+          .then(res => {
+            console.log(res)
+          })
+          return response;
+        }catch(e){
+          console.log('Error al crear registro en Flight',e)
+        }
+        break;
+      case "booking":
+        body = {
+          id, 
+          date
+        };
+        try{
+          let response = await axios.post(`http://localhost:3000/bookings/new`, body)
+          .then(res => {
+            console.log(res.data)
+          })
+          return response;
+        }catch(e){
+          console.log('Error al crear registro en Booking',e)
+        }
+        break;
+      case "passenger":
+        body={
+          passName, passEmail, date
+        }
+        try{
+          let response = await axios.post(`http://localhost:3000/passengers/new`, body)
+          .then(res => {
+            console.log(res.data)
+          })
+          return response;
+        }catch(e){
+          console.log('Error al crear registro en Passenger',e)
+        }
+        break;
+      default:
+        return {}
+        break;
+    }
+  };
+
   return (
     <Container>
       <Box sx={{ minWidth: 120 }} mt={4}>
@@ -85,6 +151,14 @@ const SelectComponentAdd = () => {
       </Box>
       {tblName === "booking" && (
         <Box mt={4}>
+          <Box my={4}>
+            <TextField
+              id="flightid"
+              label="Flight id"
+              variant="standard"
+              onChange={handleChangeName}
+            />
+          </Box>
           <LocalizationProvider dateAdapter={DateAdapter}>
             <DesktopDatePicker
               label="Book date"
@@ -98,6 +172,7 @@ const SelectComponentAdd = () => {
             <Button
               variant="contained"
               onClick={() => {
+                handleSubmmit();
                 setOpen(true);
               }}
             >
@@ -162,6 +237,7 @@ const SelectComponentAdd = () => {
             <Button
               variant="contained"
               onClick={() => {
+                handleSubmmit();
                 setOpen(true);
               }}
             >
@@ -245,6 +321,7 @@ const SelectComponentAdd = () => {
             <Button
               variant="contained"
               onClick={() => {
+                handleSubmmit();
                 setOpen(true);
               }}
             >

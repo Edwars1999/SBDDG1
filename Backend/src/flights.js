@@ -75,8 +75,7 @@ Flights.prototype.createFlight = async function(flightSource, flightDest, flight
 	try {
 		const query = {
 		sql: `INSERT INTO flight (flightSource, flightDest, flightDate, flightSeat, ticketCost) VALUES (${flightSource}, ${flightDest}, ${flightDate}, ${flightSeat}, ${ticketCost})`,
-		};
-		
+		};		
 		let result = await database.run(query);
 		if (result[0]) {
 			var rows = result[0].map((row) => row.toJSON());
@@ -116,8 +115,7 @@ Flights.prototype.modifyFlight = async function(idflight, flightSource, flightDe
 }
 
 // DELETE
-Flights.prototype.deleteFlight = async function(idflight) {
-	
+Flights.prototype.deleteFlight = async function(idflight) {	
 	try {
 		const query = {
 		sql: `DELETE FROM flight WHERE flightId=${idflight}`,
